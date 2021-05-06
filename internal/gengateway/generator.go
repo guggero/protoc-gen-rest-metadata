@@ -40,18 +40,7 @@ type generator struct {
 func New(reg *descriptor.Registry, useRequestContext bool, registerFuncSuffix, pathTypeString, modulePathString string, allowPatchFeature bool) gen.Generator {
 	var imports []descriptor.GoPackage
 	for _, pkgpath := range []string{
-		"context",
-		"io",
-		"net/http",
 		"github.com/grpc-ecosystem/grpc-gateway/runtime",
-		"github.com/grpc-ecosystem/grpc-gateway/utilities",
-		"github.com/golang/protobuf/descriptor",
-		"github.com/golang/protobuf/proto",
-		"google.golang.org/grpc",
-		"google.golang.org/grpc/codes",
-		"google.golang.org/grpc/grpclog",
-		"google.golang.org/grpc/metadata",
-		"google.golang.org/grpc/status",
 	} {
 		pkg := descriptor.GoPackage{
 			Path: pkgpath,
@@ -161,8 +150,6 @@ func (g *generator) generate(file *descriptor.File) (string, error) {
 				pkg == file.GoPkg || pkgSeen[pkg.Path] {
 				continue
 			}
-			pkgSeen[pkg.Path] = true
-			imports = append(imports, pkg)
 		}
 	}
 	params := param{
